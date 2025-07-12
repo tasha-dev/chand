@@ -17,7 +17,7 @@ export default function Page({
   return (
     <div
       className={cn(
-        'bg-background min-h-screen text-foreground p-3',
+        'bg-background min-h-screen text-foreground lg:p-3 p-6',
         className,
       )}
     >

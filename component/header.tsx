@@ -17,7 +17,7 @@ export default function Header(): ReactNode {
 
   // Returning JSX
   return (
-    <header className='flex items-center justify-between gap-3 mb-4'>
+    <header className='flex items-center justify-between gap-3 lg:mb-4 mb-8'>
       <Link href='/'>
         <h3 className='truncate'>Chand ?!</h3>
       </Link>
@@ -25,7 +25,7 @@ export default function Header(): ReactNode {
         <Clock />
         <Button
           size={'icon'}
-          className='transition-all duration-200 active:scale-85'
+          className='transition-all duration-200 active:scale-85 cursor-pointer'
           onClick={() => {
             theme === 'light' ? setTheme('dark') : setTheme('light');
           }}

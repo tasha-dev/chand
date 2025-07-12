@@ -20,7 +20,7 @@ export default function Rate({
   return (
     <Card
       className={cn(
-        'aspect-square flex items-center justify-between gap-3 flex-col cursor-pointer transition-all duration-200 active:scale-95',
+        'md:aspect-square flex items-center justify-between md:gap-3 gap-12 flex-col cursor-pointer transition-all duration-200 active:scale-95',
         className,
       )}
     >

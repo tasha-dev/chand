@@ -9,7 +9,7 @@ export default function HomePage(): ReactNode {
   // Returning JSX
   return (
     <Page>
-      <div className='grid grid-cols-3 gap-5'>
+      <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
         {[...new Array(200)].map((_, index) => (
           <Rate
             key={index}
