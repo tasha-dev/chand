@@ -34,3 +34,7 @@ export interface ContainerProps {
   className?: string;
   variant?: 'sm' | 'lg';
 }
+
+export interface AboutModalProps {
+  setLocalStorageItem: (val: boolean) => void;
+}

@@ -6,7 +6,6 @@
 import { ReactNode } from 'react';
 import Container from './ui/container';
 import { Code, Ellipsis, Plus, SunMoon } from 'lucide-react';
-import { Button } from '@/component/ui/button';
 import { DropdownMenuContent } from './ui/dropdown-menu';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
