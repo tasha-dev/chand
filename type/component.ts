@@ -16,3 +16,15 @@ export interface PageProps {
 export interface ClockProps {
   className?: string;
 }
+
+export interface RateProps {
+  img?: string;
+  name: string;
+  slug: string;
+  price: number;
+  className?: string;
+  status: {
+    name: 'up' | 'down' | 'same';
+    number: number;
+  };
+}

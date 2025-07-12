@@ -8,6 +8,7 @@ import Clock from './clock';
 import { Button } from './ui/button';
 import { SunMoon } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import Link from 'next/link';
 
 // Creating and exporting Header component as default
 export default function Header(): ReactNode {
@@ -16,12 +17,15 @@ export default function Header(): ReactNode {
 
   // Returning JSX
   return (
-    <header className='flex items-center justify-between gap-3'>
-      <h3 className='truncate'>Chand ?!</h3>
+    <header className='flex items-center justify-between gap-3 mb-4'>
+      <Link href='/'>
+        <h3 className='truncate'>Chand ?!</h3>
+      </Link>
       <div className='flex items-center justify-between gap-3'>
         <Clock />
         <Button
           size={'icon'}
+          className='transition-all duration-200 active:scale-85'
           onClick={() => {
             theme === 'light' ? setTheme('dark') : setTheme('light');
           }}
