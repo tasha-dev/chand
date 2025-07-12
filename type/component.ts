@@ -6,3 +6,13 @@ import { ReactNode } from 'react';
 export interface RootLayoutProps {
   children: ReactNode;
 }
+
+export interface PageProps {
+  children: ReactNode;
+  variant?: 'sm' | 'lg';
+  className?: string;
+}
+
+export interface ClockProps {
+  className?: string;
+}

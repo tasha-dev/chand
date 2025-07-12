@@ -6,6 +6,7 @@ import { ReactNode } from 'react';
 import { Open_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
 import type { Metadata } from 'next';
+import { ThemeProvider } from 'next-themes';
 
 // Defining metadata of the pages
 export const metadata: Metadata = {
@@ -52,7 +53,7 @@ export default function RootLayout({ children }: RootLayoutProps): ReactNode {
           OpenSans.className,
         )}
       >
-        {children}
+        <ThemeProvider attribute={'class'}>{children}</ThemeProvider>
       </body>
     </html>
   );
