@@ -28,3 +28,9 @@ export interface RateProps {
     number: number;
   };
 }
+
+export interface ContainerProps {
+  children: ReactNode;
+  className?: string;
+  variant?: 'sm' | 'lg';
+}

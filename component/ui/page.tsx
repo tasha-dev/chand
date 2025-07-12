@@ -4,6 +4,8 @@ import { cn } from '@/lib/utils';
 import { PageProps } from '@/type/component';
 import { ReactNode } from 'react';
 import Header from '../header';
+import BottomBar from '../bottomBar';
+import Container from './container';
 
 // Creating and exporting page component as default
 export default function Page({
@@ -19,15 +21,11 @@ export default function Page({
         className,
       )}
     >
-      <div
-        className={cn(
-          'mx-auto',
-          variant === 'sm' ? 'max-w-[800px]' : 'max-w-[1100px]',
-        )}
-      >
+      <BottomBar />
+      <Container variant={variant}>
         <Header />
         {children}
-      </div>
+      </Container>
     </div>
   );
 }
