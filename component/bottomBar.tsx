@@ -5,15 +5,26 @@
 // Importing part
 import { ReactNode } from 'react';
 import Container from './ui/container';
-import { Code, Ellipsis, Plus, SunMoon } from 'lucide-react';
+import { Code, Ellipsis, Plus, Search, SunMoon } from 'lucide-react';
 import { DropdownMenuContent } from './ui/dropdown-menu';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
+import { Button } from '@/component/ui/button';
 import {
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/component/ui/dropdown-menu';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/component/ui/drawer';
 
 // Creating and exorting footer component as default
 export default function BottomBar(): ReactNode {
@@ -30,33 +41,87 @@ export default function BottomBar(): ReactNode {
         <span className='text-foreground/80 text-right text-xs font-medium truncate lg:block hidden'>
           Chand ?!
         </span>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className='block shrink-0 cursor-pointer'>
-              <Ellipsis className='w-4 h-4 text-foreground' />
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem asChild>
-              <Link
-                href='https://tasha.vercel.app/'
-                className='flex items-center justify-start gap-3 cursor-pointer'
+        <div className='lg:block hidden'>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className='block shrink-0 cursor-pointer'>
+                <Ellipsis className='w-4 h-4 text-foreground' />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem className='cursor-pointer outline-none'>
+                <Search className='w-4 h-4 shrink-0' />
+                Search
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <Link
+                  href='https://tasha.vercel.app/'
+                  className='flex items-center justify-start gap-3 cursor-pointer'
+                >
+                  <Code className='w-4 h-4 shrink-0' />
+                  Mahdi Tasha
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className='cursor-pointer outline-none'
+                onClick={() => {
+                  theme === 'light' ? setTheme('dark') : setTheme('light');
+                }}
               >
-                <Code className='w-4 h-4' />
-                Mahdi Tasha
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem
-              className='cursor-pointer outline-none'
-              onClick={() => {
-                theme === 'light' ? setTheme('dark') : setTheme('light');
-              }}
-            >
-              <SunMoon className='w-4 h-4' />
-              Toggle Theme
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                <SunMoon className='w-4 h-4 shrink-0' />
+                Toggle Theme
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <div className='lg:hidden block'>
+          <Drawer>
+            <DrawerTrigger>
+              <button className='block shrink-0 cursor-pointer'>
+                <Ellipsis className='w-4 h-4 text-foreground' />
+              </button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle>Options</DrawerTitle>
+              </DrawerHeader>
+              <div className='flex flex-col gap-4 p-4'>
+                <Button
+                  className='flex items-center justify-start cursor-pointer'
+                  variant={'outline'}
+                >
+                  <Search className='w-4 h-4 shrink-0' />
+                  Search
+                </Button>
+                <Link href='https://tasha.vercel.app/' className='block w-full'>
+                  <Button
+                    tabIndex={-1}
+                    className='flex items-center justify-start cursor-pointer w-full'
+                    variant={'outline'}
+                  >
+                    <Code className='w-4 h-4 shrink-0' />
+                    Mahdi Tasha
+                  </Button>
+                </Link>
+                <Button
+                  className='flex items-center justify-start cursor-pointer'
+                  variant={'outline'}
+                  onClick={() => {
+                    theme === 'light' ? setTheme('dark') : setTheme('light');
+                  }}
+                >
+                  <SunMoon className='w-4 h-4 shrink-0' />
+                  Toggle Theme
+                </Button>
+              </div>
+              <DrawerFooter>
+                <DrawerClose asChild>
+                  <Button>Close</Button>
+                </DrawerClose>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+        </div>
       </Container>
     </div>
   );
