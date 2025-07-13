@@ -3,17 +3,14 @@
 'use client';
 
 // Importing part
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect } from 'react';
 import {
-  Command,
   CommandDialog,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-  CommandSeparator,
-  CommandShortcut,
 } from '@/component/ui/command';
 import { useSearchCommand } from '@/context/searchCommandContext';
 
