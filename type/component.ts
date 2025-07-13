@@ -38,3 +38,7 @@ export interface ContainerProps {
 export interface AboutModalProps {
   setLocalStorageItem: (val: boolean) => void;
 }
+
+export interface SearchCommandProviderProps {
+  children: ReactNode;
+}

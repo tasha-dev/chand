@@ -25,11 +25,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/component/ui/drawer';
+import { useSearchCommand } from '@/context/searchCommandContext';
 
 // Creating and exorting footer component as default
 export default function BottomBar(): ReactNode {
   // Defining hooks
   const { theme, setTheme } = useTheme();
+  const searchCommand = useSearchCommand();
 
   // Retutning JSX
   return (
@@ -49,7 +51,10 @@ export default function BottomBar(): ReactNode {
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem className='cursor-pointer outline-none'>
+              <DropdownMenuItem
+                onClick={() => searchCommand.toggle()}
+                className='cursor-pointer outline-none'
+              >
                 <Search className='w-4 h-4 shrink-0' />
                 Search
               </DropdownMenuItem>
@@ -89,6 +94,7 @@ export default function BottomBar(): ReactNode {
                 <Button
                   className='flex items-center justify-start cursor-pointer'
                   variant={'outline'}
+                  onClick={() => searchCommand.toggle()}
                 >
                   <Search className='w-4 h-4 shrink-0' />
                   Search

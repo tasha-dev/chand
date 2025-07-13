@@ -25,6 +25,7 @@ export default function Header(): ReactNode {
         <Clock />
         <Button
           size={'icon'}
+          variant={'outline'}
           className='transition-all duration-200 active:scale-85 cursor-pointer'
           onClick={() => {
             theme === 'light' ? setTheme('dark') : setTheme('light');
