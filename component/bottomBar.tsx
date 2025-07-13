@@ -25,6 +25,7 @@ import {
   DrawerTrigger,
 } from '@/component/ui/drawer';
 import { useSearchCommand } from '@/context/searchCommandContext';
+import AddCurrency from './dialog/addCurrency';
 
 // Creating and exorting footer component as default
 export default function BottomBar(): ReactNode {
@@ -36,9 +37,7 @@ export default function BottomBar(): ReactNode {
   return (
     <div className='fixed bottom-0 pb-5 left-0 w-full z-50 bg-gradient-to-t from-background to-transparent'>
       <Container className='bg-foreground/20 backdrop-blur-xl border border-foreground/20 rounded-[50rem] px-4 lg:py-4 py-3 shadow-xl transition-all duration-300 lg:scale-95 active:scale-90 lg:max-w-[800px] md:max-w-[500px] max-w-[100px] flex items-center justify-between overflow-hidden'>
-        <button className='block shrink-0 cursor-pointer outline-none'>
-          <Plus className='w-4 h-4 text-foreground' />
-        </button>
+        <AddCurrency />
         <span className='text-foreground/80 text-right text-xs font-medium truncate lg:block hidden'>
           Chand ?!
         </span>
