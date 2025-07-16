@@ -3,6 +3,18 @@
 'use client';
 
 // Importing part
+import { Loader2, Minus, Plus } from 'lucide-react';
+import { ReactNode, useContext, useState } from 'react';
+import { Button } from '@/component/ui/button';
+import { DialogTrigger } from '@radix-ui/react-dialog';
+import { z } from 'zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { currencyListContext } from '../layout/page';
+import useLocalStorageState from 'use-local-storage-state';
+import { toast } from 'sonner';
+import usePagination from '@/hook/usePagination';
+import { currencyRateType } from '@/type/api';
 import {
   Dialog,
   DialogClose,
@@ -11,17 +23,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/component/ui/dialog';
-import { Plus, Send } from 'lucide-react';
-import { ReactNode, useState } from 'react';
-import { Button } from '@/component/ui/button';
-import { DialogTrigger } from '@radix-ui/react-dialog';
-import { z } from 'zod';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -34,6 +38,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/component/ui/select';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/component/ui/tooltip';
+import { Combobox } from '../ui/combobox';
 
 // Defining form Schema
 const formSchema = z.object({
@@ -46,14 +56,41 @@ type formType = z.infer<typeof formSchema>;
 // Creating and exporting AddCurrency dialog as default
 export default function AddCurrency(): ReactNode {
   // Defining hooks
-  const [opened, setOpened] = useState<boolean>(true);
+  const currencys = useContext(currencyListContext);
+  const [opened, setOpened] = useState<boolean>(false);
+
+  const [savedItems, setSavedItems] = useLocalStorageState<string[]>(
+    'savedItems',
+    {
+      defaultValue: [],
+    },
+  );
+
   const form = useForm<formType>({
     resolver: zodResolver(formSchema),
   });
 
+  // Defining variables
+  const currencysList = currencys ? Object.values(currencys) : [];
+  const pagination = usePagination<currencyRateType>(currencysList, 10);
+  const transformed = pagination.paginatedData.map((item) => ({
+    label: item.code,
+    value: item.value,
+  }));
+
   // Defining submit handler
   const submitFn: SubmitHandler<formType> = async ({ name }) => {
-    console.log(name);
+    if (savedItems.includes(name)) {
+      form.setError('name', {
+        message: 'The item is added already !',
+      });
+    } else {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      setSavedItems([...savedItems, name]);
+      setOpened(false);
+      toast('The item is added !');
+    }
   };
 
   // Returning JSX
@@ -77,21 +114,54 @@ export default function AddCurrency(): ReactNode {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Name of the currency :</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger className='w-full'>
-                          <SelectValue placeholder='Select currency' />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value='m@example.com'>
-                          m@example.com
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <div className='flex justify-between gap-3'>
+                        <Combobox
+                          items={transformed}
+                          value={field.value}
+                          onChange={field.onChange}
+                          placeholder='Select currency...'
+                          className='flex-1'
+                        />
+                        <div className='shrink-0 flex gap-3'>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                size='icon'
+                                type='button'
+                                className='cursor-pointer'
+                                disabled={
+                                  pagination.currentPage >=
+                                  pagination.totalPages
+                                }
+                                onClick={pagination.nextPage}
+                              >
+                                <Plus className='w-2 h-2' />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              Show more items in dropdown
+                            </TooltipContent>
+                          </Tooltip>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <Button
+                                size='icon'
+                                type='button'
+                                className='cursor-pointer'
+                                onClick={pagination.prevPage}
+                                disabled={pagination.currentPage <= 1}
+                              >
+                                <Minus className='w-2 h-2' />
+                              </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              Show less items in dropdown
+                            </TooltipContent>
+                          </Tooltip>
+                        </div>
+                      </div>
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -103,8 +173,16 @@ export default function AddCurrency(): ReactNode {
                   Close
                 </Button>
               </DialogClose>
-              <Button className='cursor-pointer' size={'icon'}>
-                <Send className='w-4 h-4' />
+              <Button
+                className='cursor-pointer'
+                disabled={form.formState.isSubmitting}
+              >
+                Save
+                {form.formState.isSubmitting ? (
+                  <Loader2 className='w-2 h-2 animate-spin' />
+                ) : (
+                  <Plus className='w-2 h-2' />
+                )}
               </Button>
             </DialogFooter>
           </form>

@@ -6,9 +6,9 @@
 import About from '@/component/dialog/about';
 import Rate from '@/component/rate';
 import SearchCommand from '@/component/searchCommand';
-import Page from '@/component/ui/page';
+import Page, { currencyListContext } from '@/component/layout/page';
 import SearchCommandProvider from '@/context/searchCommandContext';
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
 import useLocalStorageState from 'use-local-storage-state';
 
 // Defining fake data
@@ -97,6 +97,8 @@ const rates: {
 
 // Creating and exporting Home page as default
 export default function HomePage(): ReactNode {
+  // Defining hooks
+  const data = useContext(currencyListContext);
   const [modalSeen, setModalSeen] = useLocalStorageState('aboutModalSeen', {
     defaultValue: false,
   });
@@ -108,6 +110,9 @@ export default function HomePage(): ReactNode {
         {!modalSeen && <About setLocalStorageItem={setModalSeen} />}
         <SearchCommand data={rates} />
         <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
+          <pre>
+            <p>{JSON.stringify(data, null, 1)}</p>
+          </pre>
           {rates.map((item, index) => (
             <Rate key={index} {...item} />
           ))}

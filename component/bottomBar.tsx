@@ -5,7 +5,7 @@
 // Importing part
 import { ReactNode } from 'react';
 import Container from './ui/container';
-import { Code, Ellipsis, Plus, Search, SunMoon } from 'lucide-react';
+import { Code, Ellipsis, Search, SunMoon } from 'lucide-react';
 import { DropdownMenuContent } from './ui/dropdown-menu';
 import Link from 'next/link';
 import { useTheme } from 'next-themes';
@@ -35,8 +35,8 @@ export default function BottomBar(): ReactNode {
 
   // Retutning JSX
   return (
-    <div className='fixed bottom-0 pb-5 left-0 w-full z-50 bg-gradient-to-t from-background to-transparent'>
-      <Container className='bg-foreground/20 backdrop-blur-xl border border-foreground/20 rounded-[50rem] px-4 lg:py-4 py-3 shadow-xl transition-all duration-300 lg:scale-95 active:scale-90 lg:max-w-[800px] md:max-w-[500px] max-w-[100px] flex items-center justify-between overflow-hidden'>
+    <div className='fixed bottom-0 pb-5 left-0 w-full z-50 bg-gradient-to-t from-background to-transparent pointer-events-none'>
+      <Container className='bg-foreground/20 backdrop-blur-xl border border-foreground/20 rounded-[50rem] px-4 lg:py-4 py-3 shadow-xl transition-all duration-300 lg:scale-95 active:scale-90 lg:max-w-[800px] md:max-w-[500px] max-w-[100px] flex items-center justify-between overflow-hidden pointer-events-auto'>
         <AddCurrency />
         <span className='text-foreground/80 text-right text-xs font-medium truncate lg:block hidden'>
           Chand ?!
