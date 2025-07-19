@@ -13,13 +13,14 @@ import {
   CommandList,
 } from '@/component/ui/command';
 import { useSearchCommand } from '@/context/searchCommandContext';
-import { SearchCommandProps } from '@/type/component';
 import { DollarSign } from 'lucide-react';
+import useCurrencys from '@/hook/useCurrencys';
 
 // Creating and exporting SearchCommand component as default
-export default function SearchCommand({ data }: SearchCommandProps): ReactNode {
+export default function SearchCommand(): ReactNode {
   // Defining hooks
   const { open, setOpen, toggle } = useSearchCommand();
+  const currencys = useCurrencys({ inLocalStorage: true });
 
   // Using useEffect to open the modal while the ctrl + key is hit on keyboard
   useEffect(() => {
@@ -40,12 +41,12 @@ export default function SearchCommand({ data }: SearchCommandProps): ReactNode {
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading='Found'>
-          {data.map((item, index) => (
+          {currencys.data.map((item, index) => (
             <CommandItem
               key={index}
               className='flex items-center justify-start gap-4'
               onSelect={() => {
-                const element = document.getElementById(item.slug);
+                const element = document.getElementById(item.code);
                 element?.scrollIntoView({ behavior: 'smooth' });
                 setOpen(false);
               }}
@@ -55,10 +56,10 @@ export default function SearchCommand({ data }: SearchCommandProps): ReactNode {
               </div>
               <div className='w-full'>
                 <span className='text-foreground text-sm block truncate text-left mb-2'>
-                  {item.name}
+                  {item.code}
                 </span>
                 <span className='text-foreground/50 text-xs block truncate text-left'>
-                  {item.slug}
+                  {item.value}
                 </span>
               </div>
             </CommandItem>

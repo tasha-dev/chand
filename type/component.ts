@@ -42,11 +42,3 @@ export interface AboutModalProps {
 export interface SearchCommandProviderProps {
   children: ReactNode;
 }
-
-export interface SearchCommandProps {
-  data: {
-    slug: string;
-    name: string;
-    price: number;
-  }[];
-}

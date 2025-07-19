@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { CheckIcon, ChevronsUpDownIcon, DollarSign } from 'lucide-react';
 
-import { cn } from '@/lib/utils';
+import { cn, sortValBy } from '@/lib/utils';
 import { Button } from '@/component/ui/button';
 import {
   Command,
@@ -19,7 +19,7 @@ import {
   PopoverTrigger,
 } from '@/component/ui/popover';
 
-interface ComboboxItem {
+export interface ComboboxItem {
   value: string;
   label: string;
 }
@@ -50,7 +50,7 @@ export function Combobox({
           aria-expanded={open}
           className={cn('justify-between w-full', className)}
         >
-          {value ? value.slice(0, 3) : placeholder}
+          {value && value !== '' ? value : placeholder}
           <ChevronsUpDownIcon className='ml-2 h-4 w-4 shrink-0 opacity-50' />
         </Button>
       </PopoverTrigger>
@@ -63,10 +63,10 @@ export function Combobox({
               {items.map((item) => (
                 <CommandItem
                   key={item.value}
-                  value={item.value}
+                  value={item.label}
                   className='flex items-center justify-start gap-4'
                   onSelect={(currentValue) => {
-                    onChange(currentValue === value ? '' : currentValue);
+                    onChange(currentValue);
                     setOpen(false);
                   }}
                 >

@@ -45,7 +45,11 @@ function PageContent({ children, variant }: PageProps): ReactNode {
       </Container>
     );
   } else if (getData.isError) {
-    return <ApiAlert />;
+    return (
+      <Container variant={variant}>
+        <ApiAlert />
+      </Container>
+    );
   } else if (!getData.isLoading && !getData.isError && getData.data) {
     return (
       <currencyListContext.Provider value={getData.data.data}>

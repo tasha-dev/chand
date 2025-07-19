@@ -10,13 +10,14 @@ export default function ApiAlert(): ReactNode {
   return (
     <Alert variant='destructive'>
       <AlertCircleIcon />
-      <AlertTitle>Unable to process your payment.</AlertTitle>
+      <AlertTitle>Unable to fetch the api.</AlertTitle>
       <AlertDescription>
-        <p>Please verify your billing information and try again.</p>
+        <p>
+          There was an error while fetching the api to get list of currencys.
+        </p>
         <ul className='list-inside list-disc text-sm'>
-          <li>Check your card details</li>
-          <li>Ensure sufficient funds</li>
-          <li>Verify billing address</li>
+          <li>Check later</li>
+          <li>Change your internet</li>
         </ul>
       </AlertDescription>
     </Alert>

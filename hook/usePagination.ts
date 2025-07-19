@@ -1,13 +1,13 @@
 // Codes by mahdi tasha
 // Importing part
-import { PaginationResult } from '@/type/hook';
+import { usePaginationResult } from '@/type/hook';
 import { useState, useMemo } from 'react';
 
 // Creating and exporting usePagination custom hook as default
 export default function usePagination<T>(
   data: T[],
   itemsPerPage: number,
-): PaginationResult<T> {
+): usePaginationResult<T> {
   // Defining states
   const [currentPage, setCurrentPage] = useState(1);
 

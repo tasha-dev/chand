@@ -4,17 +4,17 @@
 
 // Importing part
 import { Loader2, Minus, Plus } from 'lucide-react';
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Button } from '@/component/ui/button';
 import { DialogTrigger } from '@radix-ui/react-dialog';
 import { z } from 'zod';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { currencyListContext } from '../layout/page';
 import useLocalStorageState from 'use-local-storage-state';
 import { toast } from 'sonner';
 import usePagination from '@/hook/usePagination';
-import { currencyRateType } from '@/type/api';
+import { Combobox, ComboboxItem } from '../ui/combobox';
+import { sortValBy } from '@/lib/utils';
 import {
   Dialog,
   DialogClose,
@@ -32,18 +32,11 @@ import {
   FormMessage,
 } from '@/component/ui/form';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/component/ui/select';
-import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '@/component/ui/tooltip';
-import { Combobox } from '../ui/combobox';
+import useCurrencys from '@/hook/useCurrencys';
 
 // Defining form Schema
 const formSchema = z.object({
@@ -56,40 +49,39 @@ type formType = z.infer<typeof formSchema>;
 // Creating and exporting AddCurrency dialog as default
 export default function AddCurrency(): ReactNode {
   // Defining hooks
-  const currencys = useContext(currencyListContext);
   const [opened, setOpened] = useState<boolean>(false);
-
-  const [savedItems, setSavedItems] = useLocalStorageState<string[]>(
-    'savedItems',
-    {
-      defaultValue: [],
-    },
-  );
-
+  const currencysList = useCurrencys({ inLocalStorage: false });
+  const [savedItems, setSavedItems] =
+    useLocalStorageState<string[]>('savedItems');
   const form = useForm<formType>({
     resolver: zodResolver(formSchema),
   });
 
   // Defining variables
-  const currencysList = currencys ? Object.values(currencys) : [];
-  const pagination = usePagination<currencyRateType>(currencysList, 10);
-  const transformed = pagination.paginatedData.map((item) => ({
+  const pagination = usePagination(currencysList.data, 10);
+  const transformed: ComboboxItem[] = pagination.paginatedData.map((item) => ({
     label: item.code,
-    value: item.value,
+    value: sortValBy(Math.round(item.value)),
   }));
 
   // Defining submit handler
   const submitFn: SubmitHandler<formType> = async ({ name }) => {
-    if (savedItems.includes(name)) {
-      form.setError('name', {
-        message: 'The item is added already !',
-      });
-    } else {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+    if (savedItems) {
+      if (savedItems.includes(name)) {
+        form.setError('name', {
+          message: 'The item is added already !',
+        });
+      } else if (name === '') {
+        form.setError('name', {
+          message: 'The item is Empty !',
+        });
+      } else {
+        await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      setSavedItems([...savedItems, name]);
-      setOpened(false);
-      toast('The item is added !');
+        setSavedItems([...savedItems, name.toLowerCase()]);
+        setOpened(false);
+        toast('The item is added !');
+      }
     }
   };
 
@@ -130,11 +122,11 @@ export default function AddCurrency(): ReactNode {
                                 size='icon'
                                 type='button'
                                 className='cursor-pointer'
+                                onClick={pagination.nextPage}
                                 disabled={
                                   pagination.currentPage >=
                                   pagination.totalPages
                                 }
-                                onClick={pagination.nextPage}
                               >
                                 <Plus className='w-2 h-2' />
                               </Button>
