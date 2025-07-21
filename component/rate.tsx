@@ -1,4 +1,7 @@
 // Codes by mahdi tasha
+// Forcing next.js to render this component as client side component
+'use client';
+
 // Importing part
 import { RateProps } from '@/type/component';
 import { ReactNode } from 'react';
@@ -10,6 +13,7 @@ import {
   ArrowUp,
   ClipboardType,
   DollarSignIcon,
+  Trash,
 } from 'lucide-react';
 import {
   ContextMenu,
@@ -18,6 +22,8 @@ import {
   ContextMenuTrigger,
   ContextMenuSeparator,
 } from '@/component/ui/context-menu';
+import useLocalStorageState from 'use-local-storage-state';
+import { toast } from 'sonner';
 
 // Creating and exporting Rate component as default
 export default function Rate({
@@ -28,6 +34,10 @@ export default function Rate({
   status,
   img,
 }: RateProps): ReactNode {
+  // Defining hooks
+  const [savedItems, setSavedItems] =
+    useLocalStorageState<string[]>('savedItems');
+
   // Returning JSX
   return (
     <ContextMenu>
@@ -86,13 +96,29 @@ export default function Rate({
       </ContextMenuTrigger>
       <ContextMenuContent>
         <ContextMenuItem
+          className='cursor-pointer'
+          onClick={() => {
+            const savedItemsCopy = savedItems ? [...savedItems] : [];
+            const removedSavedItem = savedItemsCopy.filter(
+              (item) => item.toLowerCase() !== slug,
+            );
+
+            setSavedItems(removedSavedItem);
+            toast('The item is deleted !');
+          }}
+        >
+          <Trash className='w-4 h-4 shrink-0' />
+          Delete Item
+        </ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem
           onClick={() => copyVal(price)}
           className='cursor-pointer'
         >
           <DollarSignIcon className='w-4 h-4 shrink-0' />
           Copy Value
         </ContextMenuItem>
-        <ContextMenuSeparator />
+
         <ContextMenuItem
           onClick={() => copyVal(name)}
           className='cursor-pointer'
