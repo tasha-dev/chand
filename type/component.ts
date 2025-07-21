@@ -1,6 +1,8 @@
 // Codes by mahdi tasha
 // Importing part
+import { ComboboxItem } from '@/component/ui/combobox';
 import { ReactNode } from 'react';
+import { Control } from 'react-hook-form';
 
 // Creating and exporting type of props in components
 export interface RootLayoutProps {
@@ -41,4 +43,15 @@ export interface AboutModalProps {
 
 export interface SearchCommandProviderProps {
   children: ReactNode;
+}
+
+export interface CurrencySelectorFormItemProps {
+  name: string;
+  label: string;
+  control: Control<any>;
+  items: ComboboxItem[];
+  onNext: () => void;
+  onPrev: () => void;
+  canNext: boolean;
+  canPrev: boolean;
 }
