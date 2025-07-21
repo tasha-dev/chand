@@ -33,7 +33,7 @@ function HomeContent(): ReactNode {
 
   return (
     <>
-      {!modalSeen && <About setLocalStorageItem={setModalSeen} />}
+      <About setLocalStorageItem={setModalSeen} />
       <SearchCommand />
       <div className='grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5'>
         {currencysList.data.length === 0 ? (
