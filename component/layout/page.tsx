@@ -39,7 +39,7 @@ function PageContent({ children, variant }: PageProps): ReactNode {
     return (
       <Container
         variant={variant}
-        className='flex items-center justify-center h-dvh w-dvw'
+        className='flex items-center justify-center w-full h-[calc(100dvh-24px)]'
       >
         <Loader2 className='w-10 h-10 text-foreground animate-spin' />
       </Container>

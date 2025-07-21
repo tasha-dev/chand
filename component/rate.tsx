@@ -35,7 +35,7 @@ export default function Rate({
         <Card
           id={slug}
           className={cn(
-            'md:aspect-square flex items-center justify-between md:gap-3 gap-12 flex-col cursor-pointer transition-all duration-200 active:scale-95',
+            'md:aspect-square flex items-center justify-between md:gap-3 gap-12 flex-col cursor-pointer transition-all duration-200 active:scale-95 select-none',
             className,
           )}
         >

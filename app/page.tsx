@@ -17,7 +17,7 @@ export default function HomePage(): ReactNode {
   // Returning JSX
   return (
     <SearchCommandProvider>
-      <Page className='mb-20'>
+      <Page>
         <HomeContent />
       </Page>
     </SearchCommandProvider>
