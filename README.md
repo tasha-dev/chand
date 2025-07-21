@@ -36,3 +36,9 @@ npm run dev
 npm run build
 npm run start
 ```
+
+## Api
+
+The used api in this project is from `CertMusashi`'s `Chande-api`
+
+- [Link to The Repo](https://github.com/CertMusashi/Chande-api)

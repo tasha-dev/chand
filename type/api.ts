@@ -2,12 +2,13 @@
 // Creating and exporting types of returned data of api
 export interface currencyRateType {
   code: string;
-  value: number;
+  name: string;
+  price: number;
+  icon: string;
+  en: string;
 }
 
 export interface exchangeRatesResponseType {
-  data: Record<string, currencyRateType>;
-  meta: {
-    last_updated_at: string;
-  };
+  date: string;
+  currencies: currencyRateType[];
 }

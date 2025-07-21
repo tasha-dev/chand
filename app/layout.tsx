@@ -50,7 +50,7 @@ export default function RootLayout({ children }: RootLayoutProps): ReactNode {
     <html suppressHydrationWarning>
       <body
         className={cn(
-          'bg-background min-h-screen overflow-x-hidden overflow-y-auto text-foreground',
+          'bg-background overflow-x-hidden overflow-y-auto text-foreground',
           OpenSans.className,
         )}
       >

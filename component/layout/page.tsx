@@ -20,7 +20,7 @@ const queryClient = new QueryClient();
 
 // Defining contexts
 export const currencyListContext = createContext<
-  exchangeRatesResponseType['data'] | undefined
+  exchangeRatesResponseType['currencies'] | undefined
 >(undefined);
 
 // Defining page content wrapper
@@ -52,7 +52,7 @@ function PageContent({ children, variant }: PageProps): ReactNode {
     );
   } else if (!getData.isLoading && !getData.isError && getData.data) {
     return (
-      <currencyListContext.Provider value={getData.data.data}>
+      <currencyListContext.Provider value={getData.data.currencies}>
         <BottomBar />
         <Container variant={variant}>
           <Header />

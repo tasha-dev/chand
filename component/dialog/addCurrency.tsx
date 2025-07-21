@@ -139,7 +139,7 @@ export default function AddCurrency(): ReactNode {
   const pagination = usePagination(currencysList.data, 10);
   const transformed: ComboboxItem[] = pagination.paginatedData.map((item) => ({
     label: item.code,
-    value: sortValBy(Math.round(item.value)),
+    value: sortValBy(Math.round(item.price)),
   }));
 
   // Defining submit handler

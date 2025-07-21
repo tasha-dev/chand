@@ -46,12 +46,13 @@ function HomeContent(): ReactNode {
           currencysList.data.map((item, index) => (
             <Rate
               key={index}
-              name={item.code}
-              price={item.value}
+              name={item.en}
+              price={item.price}
               slug={item.code}
+              img={item.icon}
               status={{
-                name: item.value < 0 ? 'down' : item.value > 0 ? 'up' : 'same',
-                number: Math.round(item.value),
+                name: 'same',
+                number: item.price,
               }}
             />
           ))
