@@ -15,6 +15,7 @@ import {
 import { useSearchCommand } from '@/context/searchCommandContext';
 import { DollarSign } from 'lucide-react';
 import useCurrencys from '@/hook/useCurrencys';
+import { sortValBy } from '@/lib/utils';
 
 // Creating and exporting SearchCommand component as default
 export default function SearchCommand(): ReactNode {
@@ -59,7 +60,7 @@ export default function SearchCommand(): ReactNode {
                   {item.code}
                 </span>
                 <span className='text-foreground/50 text-xs block truncate text-left'>
-                  {item.value}
+                  {sortValBy(item.price)}
                 </span>
               </div>
             </CommandItem>
